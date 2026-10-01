@@ -19,6 +19,15 @@ const contactSchema = z.object({
   message: z.string().min(10).max(2000),
 });
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function createTransport() {
   if (!process.env.SMTP_HOST) return null;
   return nodemailer.createTransport({
@@ -49,7 +58,7 @@ contactRouter.post('/contact', limiter, async (req, res) => {
         replyTo: email,
         subject: `[Portfolio] Message de ${name}`,
         text: `De : ${name} <${email}>\n\n${message}`,
-        html: `<p><strong>De :</strong> ${name} &lt;${email}&gt;</p><p>${message.replace(/\n/g, '<br>')}</p>`,
+        html: `<p><strong>De :</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p><p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>`,
       });
     } catch (err) {
       console.error('Email send error:', err);

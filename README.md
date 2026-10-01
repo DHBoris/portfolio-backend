@@ -50,7 +50,7 @@ npm install
 PORT=3001
 CORS_ORIGIN=http://localhost:5173
 
-# SMTP (optionnel — sans ces variables, les messages sont loggés en console)
+# SMTP (optionnel, sans ces variables, les messages sont loggés en console)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your@email.com
@@ -72,7 +72,7 @@ npm run start    # Démarrage du build compilé
 
 ```
 src/
-├── index.ts          # Point d'entrée — configuration Express
+├── index.ts          # Point d'entrée, configuration Express
 └── routes/
     └── contact.ts    # Route POST /api/contact
 ```
